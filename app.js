@@ -4,15 +4,16 @@ import {
   parseTAFAsForecast,
   getCompositeForecastForDate,
   parseMetar,
-} from "metar-taf-parser";
+} from "./utils/metar-taf-parser.js";
 import { getTAF } from "./utils/latest.js";
 
 const app = new Express();
 
 app.get("/taf/:icao?", async (req, res) => {
   const icao = req.params.icao.toUpperCase();
-  const getTaf = await getTAF(icao, "taf");
-  const rawTAFString = getTaf[icao][0].data_text;
+  // const getTaf = await getTAF(icao, "taf");
+  // const rawTAFString = getTaf[icao][0].data_text;
+  const rawTAFString = `TAF WAWB 100600Z 1007/1018 09012KT 9999 FEW019=`;
   const issued = new Date();
   const report = parseTAFAsForecast(rawTAFString, { issued });
 
@@ -42,7 +43,11 @@ app.get("/taf/:icao?", async (req, res) => {
     end: report.end,
   };
 
-  res.send({ report: reportFilter, forecast: forecastPerHour });
+  res.send({
+    currentTime: issued,
+    report: reportFilter,
+    forecast: forecastPerHour,
+  });
 });
 
 app.get("/metar/:icao?", async (req, res) => {
