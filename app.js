@@ -11,9 +11,9 @@ const app = new Express();
 
 app.get("/taf/:icao?", async (req, res) => {
   const icao = req.params.icao.toUpperCase();
-  // const getTaf = await getTAF(icao, "taf");
-  // const rawTAFString = getTaf[icao][0].data_text;
-  const rawTAFString = `TAF WAWB 100600Z 1007/1018 09012KT 9999 FEW019=`;
+  const getTaf = await getTAF(icao, "taf");
+  const rawTAFString = getTaf[icao][0].data_text;
+  // const rawTAFString = `TAF WAWB 100600Z 1007/1018 09012KT 9999 FEW019=`;
   const issued = new Date();
   const report = parseTAFAsForecast(rawTAFString, { issued });
 
