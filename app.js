@@ -8,10 +8,10 @@ import {
 import { getTAF } from "./utils/latest.js";
 import cors from "cors";
 
-app.use(cors());
 
 const app = new Express();
 
+app.use(cors());
 app.get("/taf/:icao?", async (req, res) => {
   const icao = req.params.icao.toUpperCase();
   const getTaf = await getTAF(icao, "taf");
