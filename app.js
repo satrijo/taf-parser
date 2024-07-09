@@ -6,6 +6,9 @@ import {
   parseMetar,
 } from "./utils/metar-taf-parser.js";
 import { getTAF } from "./utils/latest.js";
+import cors from "cors";
+
+app.use(cors());
 
 const app = new Express();
 
